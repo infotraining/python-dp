@@ -23,7 +23,12 @@ class Rectangle(Shape):
         self.h = h
 
     def draw(self):
-        print('Rectangle x={} y={} w={} h={}'.format(self.x, self.y, self.w, self.h))
+        print('Rectangle x={} y={} w={} h={}'.format(
+            self.x, self.y, self.w, self.h))
+
+
+shape_factory = {'Circle': Circle, 'Rectangle': Rectangle,
+                 'Square': lambda x, y, size: Rectangle(x, y, size, size)}
 
 
 class Drawing:
@@ -34,7 +39,7 @@ class Drawing:
         return '<Drawing {}>'.format(str(self._shapes))
 
     @classmethod
-    def from_stream(cls, stream):
+    def from_stream(cls, stream, shape_factory=shape_factory):
         shapes = []
         for line in stream:
             line = line.strip()
@@ -42,15 +47,8 @@ class Drawing:
                 continue
             shape_name, *parameters = line.split()
             parameters = map(int, parameters)
-            if shape_name == 'Circle':
-                shape = Circle(*parameters)
-            elif shape_name == 'Rectangle':
-                shape = Rectangle(*parameters)
-            elif shape_name == 'Square':
-                x, y, a = parameters
-                shape = Rectangle(x, y, a, a)
-            else:
-                raise TypeError
+
+            shape = shape_factory[shape_name](*parameters)
             shapes.append(shape)
         return cls(shapes)
 
@@ -60,7 +58,7 @@ class Drawing:
 
 
 if __name__ == "__main__":
-    
+
     raw_shapes = '''
 Circle 15 10 14
 Rectangle 30 30 100 150

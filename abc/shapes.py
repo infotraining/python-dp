@@ -6,6 +6,7 @@ Coord = namedtuple('Coord', 'x,y')
 
 
 class Shape(abc.ABC):
+
     @abc.abstractproperty
     def coordinates(self) -> Coord:
         pass
@@ -43,8 +44,8 @@ class Circle(ShapeBase):
 class Rectangle(ShapeBase):
     def __init__(self, x, y, w, h):
         super().__init__(x, y)
-        self.__width = w
-        self.__height = h
+        self.width = w
+        self.height = h
 
     # def move_to(self, x, y) -> None:
     #     super().move_to(x, y)
@@ -53,6 +54,33 @@ class Rectangle(ShapeBase):
         print(
             f'Rectangle at {self.coordinates} with width={self.__width} & height={self.__height}')
 
+
+class Square(Shape):
+    def __init__(self, x, y, size):        
+        self.__rect = Rectangle(x, y, size, size)
+
+    @property
+    def size(self):        
+        return self.__rect.width
+        
+    def draw(self):
+        self.__rect.draw()
+
+    def move_to(self, x, y) -> None:
+        return self.__rect.move_to(x, y)
+    
+    
+def get_rect():
+    return Square(10, 20, 100)
+
+def test_square_area():
+    s = get_rect()
+    
+    
+
+    assert s.width * s.height == 200
+
+   
 
 def draw_shapes(shapes: List[Shape]):
     for s in shapes:
@@ -70,3 +98,6 @@ if __name__ == "__main__":
 
     r = Rectangle(10, 200, 500, 100)
     r.draw()
+
+    s = Square(10, 20, 100)
+    s.draw()
