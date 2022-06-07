@@ -13,6 +13,9 @@ class LEDLight:
         self.color = color
         print(f'Color({color.R}, {color.G}, {color.B}) is set for a LED light')
 
+class UberLEDLight(LEDLight):
+    pass
+
 
 class LightSwitch(typing.Protocol):
     def on(self): ...
@@ -62,7 +65,7 @@ if __name__ == "__main__":
     btn.click()
 
 
-    led = LEDLight()
+    led = UberLEDLight()
     btn = ToggleButton(LEDSwitchObjectAdapter(led))
     btn.click()
     btn.click()

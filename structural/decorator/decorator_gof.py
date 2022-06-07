@@ -1,4 +1,7 @@
-class Component:
+import abc
+
+class Component(abc.ABC):
+    @abc.abstractmethod
     def operation(self):
         pass
 
@@ -9,7 +12,7 @@ class ConcreteComponent(Component):
 
 
 class Decorator(Component):
-    def __init__(self, component):
+    def __init__(self, component: Component):
         self._component = component
 
     @property
@@ -47,14 +50,15 @@ class ConcreteDecoratorB(Decorator):
 
 
 class Client:
-    def use(self, component):
+    def use(self, component: Component):
         component.operation()
 
 
 def main():
     component = ConcreteComponent()
 
-    decorated_component = ConcreteDecoratorA(component, "state")
+    decorated_component = ConcreteDecoratorA(component, "stateA")
+    decorated_component = ConcreteDecoratorA(decorated_component, "stateB")
     decorated_component = ConcreteDecoratorB(decorated_component)
 
     client = Client()

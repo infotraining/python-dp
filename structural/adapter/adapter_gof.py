@@ -23,9 +23,9 @@ class ObjectAdapter:
 
 
 # Approach 2
-class ClassAdapter(Adaptee, Target):
+class ClassAdapter(Adaptee):
     def request(self):
-        Adaptee.specific_request(self)
+        super().specific_request()
 
 
 # Approach 3 - pythonic way
