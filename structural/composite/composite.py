@@ -1,6 +1,5 @@
 
 class Leaf:
-
     def __init__(self, name):
         self.name = name
 
@@ -26,7 +25,6 @@ class Composite(Leaf):
             child.display(alignment + 2)
 
     def __iter__(self):
-
         for child in self.children:
             yield child
             if isinstance(child, Composite):
@@ -53,7 +51,7 @@ def main():
 
     root.display()
 
-    #root.remove_child(xa)
+    root.remove_child(xa)
 
     print("-" * 40)
 

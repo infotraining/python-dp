@@ -3,6 +3,7 @@ from io import StringIO
 from typing import List
 import turtle
 
+# Implementation
 class Drawing(abc.ABC):
     @abc.abstractmethod
     def draw_line(self, x1, y1, x2, y2):
@@ -12,6 +13,7 @@ class Drawing(abc.ABC):
     def draw_circle(self, x, y, r):
         pass
 
+# Abstraction
 class Shape(abc.ABC):
     @abc.abstractmethod
     def draw():
@@ -57,6 +59,15 @@ class Square(Shape):
     def __new__(cls, drawing, x, y, a):
         return Rectangle(drawing, x, y, a, a)
 
+class Polygon(ShapeBase):
+    def __init__(self, drawing, points):
+        super().__init__(drawing, points[0][0], points[0][1])
+        self.points = points
+
+    def draw(self):
+        self.drawing.draw_line(self.points[0][0], self.points[0][1], self.points[1][0], self.points[1][1])
+        self.drawing.draw_line(self.points[1][0], self.points[1][1], self.points[2][0], self.points[2][1])
+        self.drawing.draw_line(self.points[2][0], self.points[2][1], self.points[0][0], self.points[0][1])
 
 class TurtleDrawing(Drawing):
     def __init__(self, *args, **kwargs):
@@ -77,10 +88,20 @@ class TurtleDrawing(Drawing):
         turtle.penup()
 
 
+class ConsoleDrawing(Drawing):
+    def draw_line(self, x1, y1, x2, y2):
+        print(f"Draw line from ({x1}, {y1}) to ({x2}, {y2})")
+
+    def draw_circle(self, x, y, r):
+        print(f"Draw circle at ({x}, {y}) with radius {r})")
+
+
 if __name__ == "__main__":
     drawing = TurtleDrawing()    
+    #drawing = ConsoleDrawing()
 
-    shapes = [Circle(drawing, 50, 50, 50), Rectangle(drawing, 40, 20, 100, 200)]
+    shapes = [Circle(drawing, 50, 50, 50), Rectangle(drawing, 40, 20, 100, 200),
+              Polygon(drawing, [(100, 200), (200, 300), (600, 600)])]
 
     for s in shapes:
         s.draw()
