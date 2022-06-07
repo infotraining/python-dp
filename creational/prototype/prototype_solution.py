@@ -27,8 +27,11 @@ class PrototypeFactory:
     def __init__(self):
         self.objects = dict()
 
-    def register(self, identifier, obj):
-        self.objects[identifier] = copy.deepcopy(obj)
+    def register(self, identifier, obj, frozen = True):
+        if frozen:
+            self.objects[identifier] = copy.deepcopy(obj)
+        else:
+            self.objects[identifier] = obj
 
     def unregister(self, identifier):
         del self.objects[identifier]

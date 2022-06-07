@@ -1,4 +1,5 @@
 import random
+import typing
 
 #-- LEVEL 1
 
@@ -33,6 +34,14 @@ class BadMonster():
 class BadSuperMonster():
     def action(self):
         print("BadSuperMonster in action")
+
+
+class EnemyFactory(typing.Protocol):
+    def create_soldier(self): ...
+        
+    def create_monster(self): ...
+        
+    def create_super_monster(self): ...
 
 
 class EasyLevelEnemyFactory:

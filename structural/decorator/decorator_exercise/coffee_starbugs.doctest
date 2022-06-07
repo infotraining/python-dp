@@ -1,0 +1,81 @@
+>>> from coffee_starbugs import *
+
+
+"""Making espresso"""
+
+    >>> espresso = Espresso()
+    >>> espresso.price
+    4.0
+    >>> espresso.description
+    'Espresso'
+    >>> espresso.prepare()
+    Making a perfect espresso: 8g of coffee, 96 Celsius, 16 bar
+
+
+"""Making cappucino"""
+
+    >>> cappuccino = Cappuccino()
+    >>> cappuccino.price
+    6.0
+    >>> cappuccino.description
+    'Cappuccino'
+    >>> cappuccino.prepare()
+    Making an espresso combined with a perfect milk foam
+
+"""Making latte"""
+
+    >>> latte = Latte()
+    >>> latte.price
+    9.0
+    >>> latte.description
+    'Latte'
+    >>> latte.prepare()
+    Making a perfect latte
+
+"""Decorating espresso with whisky and whipped cream"""
+
+    >>> coffee = Whisky(Whipped(Espresso()))
+    >>> coffee.price
+    16.5
+    >>> coffee.description
+    'Espresso + Whipped Cream + Whisky'
+    >>> coffee.prepare()
+    Making a perfect espresso: 8g of coffee, 96 Celsius, 16 bar
+    Adding a whipped cream
+    Pouring a 50cl of whisky
+
+"""Decorating cappuccino with whisky and extra espresso"""
+
+    >>> coffee = Whisky(ExtraEspresso(Cappuccino()))
+    >>> coffee.price
+    20.0
+    >>> coffee.description
+    'Cappuccino + Extra Espresso + Whisky'
+    >>> coffee.prepare()
+    Making an espresso combined with a perfect milk foam
+    Making a perfect espresso: 8g of coffee, 96 Celsius, 16 bar
+    Pouring a 50cl of whisky
+
+
+"""Build decorated coffee"""
+
+    >>> cb = CoffeeBuilder()
+    >>> cb.create_base(Espresso)        # doctest: +ELLIPSIS
+    <coffee_starbugs.CoffeeBuilder object at 0x...>
+
+    >>> cb.add(Whisky)                  # doctest: +ELLIPSIS
+    <coffee_starbugs.CoffeeBuilder object at 0x...>
+
+    >>> cb.add(Whisky, Whipped)     # doctest: +ELLIPSIS
+    <coffee_starbugs.CoffeeBuilder object at 0x...>
+
+    >>> coffee = cb.get_coffee()
+    >>> coffee.price
+    26.5
+    >>> coffee.description
+    'Espresso + Whisky + Whisky + Whipped Cream'
+    >>> coffee.prepare()
+    Making a perfect espresso: 8g of coffee, 96 Celsius, 16 bar
+    Pouring a 50cl of whisky
+    Pouring a 50cl of whisky
+    Adding a whipped cream

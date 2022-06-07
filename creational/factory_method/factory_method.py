@@ -31,7 +31,6 @@ class BMusicService:
 
 
 class BMusicServiceFactory:
-
     def __init__(self, config) -> None:
         self.config = config
 
@@ -52,8 +51,8 @@ class MusicClient:
 def main():
     config_A = {'user_name': 'superuser', 'user_secret': 'SECRET_KEY_C'}
     config_B = {'user_name': 'superuser',
-                'user_secret': 'SECRET_KEY_B', 'timeout': 30}                
-    
+                'user_secret': 'SECRET_KEY_B', 'timeout': 30}
+
     client = MusicClient(lambda:  AMusicService(**config_A))
     client.play_track("Kill'em All")
 
@@ -62,12 +61,16 @@ def main():
     client = MusicClient(music_service_factory)
     client.play_track("Schism")
 
+    ############################################################
+
     global_config = {'MusicService': 'B'}
 
-    music_factories = { 'A' : lambda:  AMusicService(**config_A), 'B' : BMusicServiceFactory(config_B) }
+    music_factories = {
+        'A': lambda:  AMusicService(**config_A),
+        'B': BMusicServiceFactory(config_B)
+    }
 
     music_service = music_factories['A']()
-
     client = MusicClient(music_factories['A'])
 
 
