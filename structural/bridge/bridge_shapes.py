@@ -77,16 +77,8 @@ class TurtleDrawing(Drawing):
         turtle.penup()
 
 
-class ConsoleDrawning(Drawing):
-    def draw_line(self, x1, y1, x2, y2):
-        print(f"Line from ({x1}, {y1}) to ({x2}, {y2})")
-    
-    def draw_circle(self, x, y, r):
-        print(f"Circle at ({x},{y}) - radius: {r}")
-
 if __name__ == "__main__":
-    #drawing = TurtleDrawing()
-    drawing = ConsoleDrawning()
+    drawing = TurtleDrawing()    
 
     shapes = [Circle(drawing, 50, 50, 50), Rectangle(drawing, 40, 20, 100, 200)]
 
