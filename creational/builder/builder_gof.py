@@ -1,3 +1,4 @@
+import abc
 from collections import namedtuple
 
 
@@ -13,6 +14,25 @@ class Car:
     def __str__(self):
         return "Car(engine={}, gearbox={}, airbags_count={}, aircondition={}, wheels={})" \
             .format(self.engine, self.gearbox, self.airbags_count, self.air_condition if self.air_condition else "None", self.wheels)
+
+class CarBuilder(abc.ABC):
+    def build_engine(self):
+         pass
+
+    def build_gearbox(self):
+        pass
+
+    def build_airbags(self):
+        pass
+
+    def build_air_condition(self):
+        pass
+
+    def build_wheel(self):
+        pass
+
+    def get_car(self):
+        pass
 
 
 class EconomyCarBuilder:
@@ -64,7 +84,6 @@ class PremiumCarBuilder:
 
 
 class Director:
-
     def __init__(self, builder):
         self.builder = builder
 
