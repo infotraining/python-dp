@@ -2,6 +2,7 @@ from dataclasses import dataclass
 import random
 from collections import namedtuple
 from enum import Enum
+import sys
 
 TreeSprites = ['pine.bmp', 'chestnut.bmp', 'oak.bmp']
 
@@ -64,3 +65,13 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+    a = "abc def _jdfjsdfhl -sdjfhsdjk"
+    b = "abc def _jdfjsdfhl -sdjfhsdjk"
+
+    print(a is b)
+
+    c = sys.intern('abc def')
+    d = sys.intern('abc def')
+
+    print(c is d)

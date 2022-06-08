@@ -23,6 +23,23 @@ class EvenFilter(logging.Filter):
         return int(no) % 2 == 0
 
 
+class ExclamationMarkFormatter(logging.Formatter):
+
+    def __init__(self):
+        super().__init__()
+
+    def format(self, record):
+        return super().format(record) + "!!!"    
+
+
+class BetterTimeFormatter(logging.Formatter):
+
+    def __init__(self, fmt=None, datefmt=None, style='%', validate=True):
+        super().__init__(fmt, datefmt, style, validate)
+
+    def formatTime(self, record, datefmt) -> str:
+        return "<<" + super().formatTime(record, datefmt) + ">>"
+
 if __name__ == "__main__":
 
     ########################
@@ -34,8 +51,9 @@ if __name__ == "__main__":
     ch.setLevel(logging.ERROR)
 
     # formatter - Strategy
-    formatter = logging.Formatter(
+    formatter = BetterTimeFormatter(
         '-- %(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    #formatter = ExclamationMarkFormatter()
     ch.setFormatter(formatter)
 
     # add ch handler to logger

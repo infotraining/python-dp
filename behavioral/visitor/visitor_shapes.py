@@ -67,18 +67,20 @@ def visitor(arg_type):
 
 
 class AreaVisitor:
+    def __init__(self):
+        self.area = 0.0
 
     @visitor(Circle)
     def visit(self, circle):
-        return math.pi * (circle.radius ** 2)
+        self.area += math.pi * (circle.radius ** 2)
 
     @visitor(Rectangle)
     def visit(self, rect):
-        return rect.width * rect.height
+        self.area += rect.width * rect.height
 
     @visitor(Line)
     def visit(self, line):
-        return 0
+        pass
 
 
 def main():
@@ -86,9 +88,10 @@ def main():
 
     area_visitor = AreaVisitor()
 
-    areas = [area_visitor.visit(s) for s in shapes]
+    for s in shapes:
+        area_visitor.visit(s)
 
-    print("areas = {}".format(areas))
+    print("areas = {}".format(area_visitor.area))
 
 if __name__ == '__main__':
     main()

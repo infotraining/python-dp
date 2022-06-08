@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 import abc
 
 
@@ -11,36 +9,49 @@ class Handler(abc.ABC):
         self._successor = successor
 
     @abc.abstractmethod
-    def handle(self, request):
+    def _can_handle(self, request):
         pass
+
+    @abc.abstractmethod
+    def _process_request(self, request):
+        pass
+
+    def handle(self, request):
+        if self._can_handle(request):
+            self._process_request(request)
+        elif self._successor:
+            self._successor.handle(request)
+
 
 
 class ConcreteHandler1(Handler):
-    def handle(self, request):
-        if 0 < request <= 10:
-            print('request {} handled in handler 1'.format(request))
-        elif self._successor:
-            self._successor.handle(request)
+    def _can_handle(self, request):
+        return 0 < request <= 10
+    
+    def _process_request(self, request):
+        print('request {} handled in handler 1'.format(request))
 
 
 class ConcreteHandler2(Handler):
-    def handle(self, request):
-        if 10 < request <= 20:
-            print('request {} handled in handler 2'.format(request))
-        elif self._successor:
-            self._successor.handle(request)
-
+    def _can_handle(self, request):
+        return 10 < request <= 20
+    
+    def _process_request(self, request):
+        print('request {} handled in handler 2'.format(request))
 
 class ConcreteHandler3(Handler):
-    def handle(self, request):
-        if 20 < request <= 30:
-            print('request {} handled in handler 3'.format(request))
-        elif self._successor:
-            self._successor.handle(request)
+    def _can_handle(self, request):
+        return 20 < request <= 30
+    
+    def _process_request(self, request):
+        print('request {} handled in handler 3'.format(request))
 
 
 class DefaultHandler(Handler):
-    def handle(self, request):
+    def _can_handle(self, request):
+        return True
+    
+    def _process_request(self, request):        
         print('end of chain, no handler for {}'.format(request))
 
 
