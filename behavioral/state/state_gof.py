@@ -1,3 +1,6 @@
+import abc
+
+
 class TurnstileAPI:
 
     def lock(self):
@@ -34,7 +37,20 @@ class TurnstileFSM_Before:
             self.state = 'LOCKED'
 
 
-class LockedState:
+class TurnstileState(abc.ABC):
+    @abc.abstractmethod
+    def coin(self, turnstile_api):
+        pass
+
+    @abc.abstractmethod
+    def pass_gate(self, turnstile_api):
+        pass
+
+    @abc.abstractproperty
+    def name(self):
+        pass
+
+class LockedState(TurnstileState):
 
     def coin(self, turnstile_api):
         turnstile_api.unlock()
@@ -49,7 +65,7 @@ class LockedState:
         return 'LOCKED'
 
 
-class UnlockedState:
+class UnlockedState(TurnstileState):
 
     def coin(self, turnstile_api):
         turnstile_api.display("Thank you...")

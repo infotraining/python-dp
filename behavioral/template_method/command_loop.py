@@ -47,6 +47,10 @@ class MyCommandLoop(cmd.Cmd):
         print('Goodbye')
         super().postloop()
 
+    def emptyline(self):
+        print('Empty line is not allowed')
+        return True
+
 def main():
     interpreter = MyCommandLoop()    
     interpreter.cmdloop()
