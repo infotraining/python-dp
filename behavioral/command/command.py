@@ -110,7 +110,7 @@ def main():
 
     btn_ls = Button("ls", ls_command)
     shrtcut_touch = KeyboardShortcut(touch_command)
-    btn_rm = Button("rename", rm_command)
+    btn_rm = Button("rename", rm_command)   
 
     # executing commands
     btn_ls.on_click()
