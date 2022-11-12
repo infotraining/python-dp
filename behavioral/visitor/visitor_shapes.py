@@ -89,7 +89,7 @@ def main():
     area_visitor = AreaVisitor()
 
     for s in shapes:
-        area_visitor.visit(s)
+        area_visitor.visit(s)        
 
     print("areas = {}".format(area_visitor.area))
 
